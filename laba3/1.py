@@ -84,8 +84,8 @@ if __name__ == "__main__":
     
     # Шаг 4: Итерационный процесс
     iteration = 0
-    print("\nn | Xn          | Yn          | |Xn - X(n+1)| | Точность | |Yn - Y(n+1)|")
-    print("-" * 80)
+    print("\nn | Xn          | Yn          | X(n+1)      | Y(n+1)      | |Xn - X(n+1)| | Точность | |Yn - Y(n+1)|")
+    print("-" * 120)
     
     while True:
         iteration += 1
@@ -98,7 +98,7 @@ if __name__ == "__main__":
         # Вывод информации о текущей итерации
         comparison_x = "меньше" if diff_x < epsilon else "больше"
         comparison_y = "меньше" if diff_y < epsilon else "больше"
-        print(f"{iteration:^3} | {x_n:.{precision_digits}f} | {y_n:.{precision_digits}f} | {diff_x:.{precision_digits}f} | {comparison_x:^8} | {diff_y:.{precision_digits}f} | {comparison_y}")
+        print(f"{iteration:^3} | {x_n:.{precision_digits}f} | {y_n:.{precision_digits}f} | {x_next:.{precision_digits}f} | {y_next:.{precision_digits}f} | {diff_x:.{precision_digits}f} | {comparison_x:^8} | {diff_y:.{precision_digits}f} | {comparison_y}")
         
         # Проверка условия остановки
         if diff_x < epsilon and diff_y < epsilon:
