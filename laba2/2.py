@@ -58,13 +58,13 @@ def combined_chord_tangent_method(a, b, tol, max_iter=100):
 # Основная программа
 if __name__ == "__main__":
     # Отображение графика функции на интервале от -10 до 10
-    x_values = np.linspace(-10, 10, 200)
+    x_values = np.linspace(-5, 5, 200)
     y_values = f(x_values)
     
     plt.figure(figsize=(8, 6))
     plt.plot(x_values, y_values, label='f(x)')
     plt.grid(True)
-    plt.title('График функции на интервале [-10, 10]')
+    plt.title('График функции на интервале [-5, 5]')
     plt.legend()
     plt.show()
     
@@ -81,13 +81,13 @@ if __name__ == "__main__":
     y_values_ddf = ddf(x_values_interval)
     
     # График функции на интервале [a, b]
-    plt.figure(figsize=(8, 6))
-    plt.plot(x_values_interval, y_values_f, label='f(x)')
-    plt.axhline(y=0, color='k', linestyle='-', label='нулевая линия')  # Нулевая линия
-    plt.grid(True)
-    plt.title(f'График функции на интервале [{a}, {b}]')
-    plt.legend()
-    plt.show()
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(x_values_interval, y_values_f, label='f(x)')
+    # plt.axhline(y=0, color='k', linestyle='-', label='нулевая линия')  # Нулевая линия
+    # plt.grid(True)
+    # plt.title(f'График функции на интервале [{a}, {b}]')
+    # plt.legend()
+    # plt.show()
     
     # График первой производной на интервале [a, b]
     plt.figure(figsize=(8, 6))
