@@ -1,88 +1,111 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Функция f(x)
 def f(x):
     return 2 * np.sin(x + 0.5) - 1.5 + x
 
-# Производная функции f'(x)
-def df(x):
-    return 2 * np.cos(x + 0.5) + 1
+def phi(x):
+    return (x + 1.5 - 2 * np.sin(x + 0.5)) / 2
 
-# Проверка условия сходимости метода простой итерации
-def check_convergence_condition(a, b):
-    df_abs_max = np.max(np.abs(df(np.linspace(a, b, 500))))
-    if df_abs_max >= 1:
-        print(f"ПРЕДУПРЕЖДЕНИЕ: Условие сходимости не выполнено на интервале [{a}, {b}], метод может расходиться.")
-        return False
-    else:
-        print(f"Условие сходимости выполнено на интервале [{a}, {b}].")
-        return True
+def phi_derivative(x):
+    return (1 - 2 * np.cos(x + 0.5)) / 2
 
-# Метод простой итерации
-def simple_iteration(a, b, tol, max_iter=10000):
-    # График функции на широком диапазоне
-    x_values = np.linspace(-10, 10, 200)
-    y_values = f(x_values)
+def simple_iteration_method(phi, a, b, epsilon, max_iterations=1000):
+    x_prev = (a + b) / 2  # Начальное приближение - середина диапазона
+    iterations = 0
+    iteration_data = []
     
-    plt.figure(figsize=(8, 6))
-    plt.plot(x_values, y_values, label='f(x)')
-    plt.grid(True)
-    plt.title('График функции')
-    plt.legend()
-    plt.show()
+    print("\nПроцесс итераций:")
+    print(f"{'Шаг':<5} | {'Xn':<6} | {'Xn+1':<6} | {'|Xn-Xn+1|':<6} | Точность")
+    print("-" * 65)
     
-    # Запрашиваем начальные значения и точность
-    print("Введите интервал и точность:")
-    a = float(input("Начало интервала: "))
-    b = float(input("Конец интервала: "))
-    tol = float(input("Точность (например, 0.0001): "))
-    
-    # Проверяем условие сходимости
-    convergence_check = check_convergence_condition(a, b)
-    
-    # Графики функции и производной на интервале [a, b]
-    x_values_interval = np.linspace(a, b, 200)
-    y_values_f = f(x_values_interval)
-    y_values_df = df(x_values_interval)
-    
-    plt.figure(figsize=(8, 6))
-    plt.plot(x_values_interval, y_values_f, label='f(x)')
-    plt.grid(True)
-    plt.title(f'График функции на интервале [{a}, {b}]')
-    plt.legend()
-    plt.show()
-    
-    plt.figure(figsize=(8, 6))
-    plt.plot(x_values_interval, y_values_df, label="f'(x)")
-    plt.axhline(y=1, color='r', linestyle='--', label='y=1')
-    plt.axhline(y=-1, color='r', linestyle='--', label='y=-1')
-    plt.grid(True)
-    plt.title(f'График производной на интервале [{a}, {b}]')
-    plt.legend()
-    plt.show()
-    
-    # Алгоритм простой итерации
-    iter_count = 0
-    x_n = (a + b) / 2  # Начальное приближение
-    x_n_plus_1 = None
-    epsilon = int(-np.log10(tol)) + 1  # Количество знаков после запятой для вывода
-    
-    print(f"{'Шаг':>10}{'Xn':>20}{'X(n+1)':>20}{'|Xn - X(n+1)|':>20}{'Сравнение с точностью':>20}")
     while True:
-        x_n_plus_1 = x_n - f(x_n) / df(x_n)  # Формула Ньютона-Рафсона
+        x_next = phi(x_prev)
+        iterations += 1
+        difference = abs(x_next - x_prev)
         
-        diff = abs(x_n - x_n_plus_1)
-        comparison = 'меньше' if diff < tol else 'больше'
+        # Формируем строку для вывода
+        comparison = "✓" if difference < epsilon else "✗"
+        print(f"{iterations:<5} | {x_prev:.{abs(int(np.log10(epsilon))) + 1}f} | {x_next:.{abs(int(np.log10(epsilon))) + 1}f} | {difference:.{abs(int(np.log10(epsilon))) + 1}f} | {comparison}")
         
-        print(f"{iter_count:>10d}{x_n:>20.{epsilon}f}{x_n_plus_1:>20.{epsilon}f}{diff:>20.{epsilon}f}{comparison:>20}")
-        
-        if diff < tol or iter_count >= max_iter:
+        # Проверка точности
+        if difference < epsilon:
             break
             
-        x_n = x_n_plus_1
-        iter_count += 1
+        if iterations >= max_iterations:
+            print(f"\nДостигнуто максимальное количество итераций ({max_iterations}).")
+            break
+            
+        x_prev = x_next
     
-    print(f"\nРешение уравнения: X = {x_n_plus_1:.{epsilon}f} с точностью {tol:.{epsilon -1}f}")
+    return x_next, iterations
 
-simple_iteration(-10, 10, 0.01)
+def plot_initial_function():
+    # График исходной функции на [-5, 5]
+    x_wide = np.linspace(-5, 5, 1000)
+    plt.figure(figsize=(10, 5))
+    plt.plot(x_wide, f(x_wide), label='f(x) = 2*sin(x+0.5) - 1.5 + x')
+    plt.axhline(0, color='black', linewidth=0.5)
+    plt.title('График исходной функции f(x)')
+    plt.xlabel('x')
+    plt.ylabel('f(x)')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_iteration_details():
+    # Ввод данных
+    a = float(input("Введите начало диапазона (A): "))
+    b = float(input("Введите конец диапазона (B): "))
+    epsilon = float(input("Введите точность (например, 0.0001): "))
+    
+    display_digits = abs(int(np.log10(epsilon))) + 1  # Точность вывода
+    
+    # График φ(x) с линиями A и B
+    x_fine = np.linspace(a, b, 1000)
+    plt.figure(figsize=(12, 5))
+    
+    plt.subplot(1, 2, 1)
+    plt.plot(x_fine, phi(x_fine), label='φ(x) = 1.5 - 2*sin(x+0.5)')
+    plt.axhline(a, color='red', linestyle='--', alpha=0.5, label=f'A = {a}')
+    plt.axhline(b, color='blue', linestyle='--', alpha=0.5, label=f'B = {b}')
+    plt.axvline(a, color='red', linestyle='--', alpha=0.3)
+    plt.axvline(b, color='blue', linestyle='--', alpha=0.3)
+    plt.title('График φ(x) и границы A, B')
+    plt.xlabel('x')
+    plt.ylabel('φ(x)')
+    plt.legend()
+    plt.grid(True)
+    
+    # График φ'(x) с линиями y=±1
+    plt.subplot(1, 2, 2)
+    plt.plot(x_fine, phi_derivative(x_fine), label="φ'(x) = -2*cos(x+0.5)")
+    plt.axhline(1, color='green', linestyle='--', alpha=0.5, label='y = 1')
+    plt.axhline(-1, color='green', linestyle='--', alpha=0.5, label='y = -1')
+    plt.axvline(a, color='red', linestyle='--', alpha=0.3)
+    plt.axvline(b, color='blue', linestyle='--', alpha=0.3)
+    plt.title('График производной φ\'(x)')
+    plt.xlabel('x')
+    plt.ylabel("φ'(x)")
+    plt.legend()
+    plt.grid(True)
+    
+    plt.tight_layout()
+    plt.show()
+    
+    # Проверка условия сходимости |φ'(x)| < 1
+    if np.any(np.abs(phi_derivative(x_fine)) >= 1):
+        print("\nПредупреждение: |φ'(x)| >= 1 на части интервала. Метод может не сходиться.")
+    else:
+        print("\nУсловие сходимости |φ'(x)| < 1 выполняется на всём интервале.")
+    
+    # Решение методом простых итераций
+    solution, iterations = simple_iteration_method(phi, a, b, epsilon)
+    
+    # Вывод результата
+    print(f"\nНайденное решение: x = {solution:.{display_digits}f}")
+
+if __name__ == "__main__":
+    print("Решение уравнения 2*sin(x+0.5) = 1.5 - x методом простых итераций")
+    plot_initial_function()
+    plot_iteration_details()
