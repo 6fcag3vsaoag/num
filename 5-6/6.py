@@ -91,6 +91,6 @@ y_vals = np.array([-1.86, -2.15, -2.57, -3.25])
 spline_coeffs = natural_cubic_spline(x_vals, y_vals)
 
 # Выводим результаты
+print_coefficients(x_vals, spline_coeffs)
 print_values(x_vals, y_vals, spline_coeffs)
 plot_spline(x_vals, y_vals, spline_coeffs)
-print_coefficients(x_vals, spline_coeffs)
