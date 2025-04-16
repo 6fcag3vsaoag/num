@@ -40,11 +40,11 @@ def calculate_coefficients(x_values, y_values):
     
     # Вывод системы нормальных уравнений
     print("Система нормальных уравнений:")
-    print("⎧ a·Σx⁴ + b·Σx³ + c·Σx² = Σx²y")
+    #print("⎧ a·Σx⁴ + b·Σx³ + c·Σx² = Σx²y")
     print(f"⎨ a·{sum_x4:.4f} + b·{sum_x3:.1f} + c·{sum_x2:.1f} = {sum_x2y:.3f}")
-    print("⎪ a·Σx³ + b·Σx² + c·Σx = Σxy")
+    #print("⎪ a·Σx³ + b·Σx² + c·Σx = Σxy")
     print(f"⎨ a·{sum_x3:.1f} + b·{sum_x2:.1f} + c·{sum_x:.1f} = {sum_xy:.3f}")
-    print("⎪ a·Σx² + b·Σx + c·n = Σy")
+    #print("⎪ a·Σx² + b·Σx + c·n = Σy")
     print(f"⎩ a·{sum_x2:.1f} + b·{sum_x:.1f} + c·{n} = {sum_y:.2f}")
     print("\n")
     
@@ -92,22 +92,22 @@ def calculate_coefficients(x_values, y_values):
     print(f"c = {c:.6f}")
     
     # Таблица проверки (невязок)
-    print("\nТаблица проверки (невязок):")
-    print("k\txk\tyk\tyk(теор)\tНевязка\tКвадрат невязки")
-    print("-" * 70)
+    # print("\nТаблица проверки (невязок):")
+    # print("k\txk\tyk\tyk(теор)\tНевязка\tКвадрат невязки")
+    # print("-" * 70)
     
-    sum_squared_residuals = 0
-    for row in table_data:
-        k, xk, yk, _, _, _, _, _ = row
-        yk_theor = a*xk**2 + b*xk + c
-        residual = yk_theor - yk
-        squared_residual = residual**2
-        sum_squared_residuals += squared_residual
+    # sum_squared_residuals = 0
+    # for row in table_data:
+    #     k, xk, yk, _, _, _, _, _ = row
+    #     yk_theor = a*xk**2 + b*xk + c
+    #     residual = yk_theor - yk
+    #     squared_residual = residual**2
+    #     sum_squared_residuals += squared_residual
         
-        print(f"{k}\t{xk:.1f}\t{yk:.2f}\t{yk_theor:.6f}\t{residual:.6f}\t{squared_residual:.6f}")
+    #     print(f"{k}\t{xk:.1f}\t{yk:.2f}\t{yk_theor:.6f}\t{residual:.6f}\t{squared_residual:.6f}")
     
-    print("-" * 70)
-    print(f"Сумма квадратов невязок: {sum_squared_residuals:.6f}")
+    # print("-" * 70)
+    # print(f"Сумма квадратов невязок: {sum_squared_residuals:.6f}")
     
     # Построение графика
     plt.figure(figsize=(10, 6))
