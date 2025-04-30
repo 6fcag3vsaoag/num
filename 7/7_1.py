@@ -40,11 +40,11 @@ def calculate_coefficients(x_values, y_values):
     
     # Вывод системы нормальных уравнений
     print("Система нормальных уравнений:")
-    print("⎧ a·Σx⁴ + b·Σx³ + c·Σx² = Σx²y")
+    #print("⎧ a·Σx⁴ + b·Σx³ + c·Σx² = Σx²y")
     print(f"⎨ a·{sum_x4:.4f} + b·{sum_x3:.1f} + c·{sum_x2:.1f} = {sum_x2y:.3f}")
-    print("⎪ a·Σx³ + b·Σx² + c·Σx = Σxy")
+    #print("⎪ a·Σx³ + b·Σx² + c·Σx = Σxy")
     print(f"⎨ a·{sum_x3:.1f} + b·{sum_x2:.1f} + c·{sum_x:.1f} = {sum_xy:.3f}")
-    print("⎪ a·Σx² + b·Σx + c·n = Σy")
+    #print("⎪ a·Σx² + b·Σx + c·n = Σy")
     print(f"⎩ a·{sum_x2:.1f} + b·{sum_x:.1f} + c·{n} = {sum_y:.2f}")
     print("\n")
     
@@ -92,22 +92,22 @@ def calculate_coefficients(x_values, y_values):
     print(f"c = {c:.6f}")
     
     # Таблица проверки (невязок)
-    print("\nТаблица проверки (невязок):")
-    print("k\txk\tyk\tyk(теор)\tНевязка\tКвадрат невязки")
-    print("-" * 70)
+    # print("\nТаблица проверки (невязок):")
+    # print("k\txk\tyk\tyk(теор)\tНевязка\tКвадрат невязки")
+    # print("-" * 70)
     
-    sum_squared_residuals = 0
-    for row in table_data:
-        k, xk, yk, _, _, _, _, _ = row
-        yk_theor = a*xk**2 + b*xk + c
-        residual = yk_theor - yk
-        squared_residual = residual**2
-        sum_squared_residuals += squared_residual
+    # sum_squared_residuals = 0
+    # for row in table_data:
+    #     k, xk, yk, _, _, _, _, _ = row
+    #     yk_theor = a*xk**2 + b*xk + c
+    #     residual = yk_theor - yk
+    #     squared_residual = residual**2
+    #     sum_squared_residuals += squared_residual
         
-        print(f"{k}\t{xk:.1f}\t{yk:.2f}\t{yk_theor:.6f}\t{residual:.6f}\t{squared_residual:.6f}")
+    #     print(f"{k}\t{xk:.1f}\t{yk:.2f}\t{yk_theor:.6f}\t{residual:.6f}\t{squared_residual:.6f}")
     
-    print("-" * 70)
-    print(f"Сумма квадратов невязок: {sum_squared_residuals:.6f}")
+    # print("-" * 70)
+    # print(f"Сумма квадратов невязок: {sum_squared_residuals:.6f}")
     
     # Построение графика
     plt.figure(figsize=(10, 6))
@@ -133,7 +133,7 @@ def calculate_coefficients(x_values, y_values):
 # Исходные данные
 xk = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
       1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2]
-yk = [-1.89, -2.07, -2.30, -2.26, -2.34, -2.66, -2.88, -2.85, -3.16, -3.49,
+yk = [0.08, 0.14, 0.37, -2.26, -2.34, -2.66, -2.88, -2.85, -3.16, -3.49,
       -3.88, -4.22, -4.45, -4.99, -5.36, -5.71, -6.51, -6.76, -7.35, -8.02]
 
 # Расчет коэффициентов и построение графика
